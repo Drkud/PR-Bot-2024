@@ -1,0 +1,45 @@
+package frc.robot.commands;
+
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.controller.Xbox;
+import frc.robot.subsystems.Modules.FrisbeeLauncher.FrisbeeLauncher;
+
+public class FlywheelSpeed extends CommandBase {
+
+  Xbox driver;
+
+  FrisbeeLauncher frisbeeLauncher;
+
+  public FlywheelSpeed(Xbox driver) {
+    this.driver = driver;
+  }
+
+  @Override
+  public void initialize() {
+    frisbeeLauncher.globalFlywheelSpeed = 0.5;
+  }
+
+  @Override
+  public void execute() {
+    double speed = frisbeeLauncher.globalFlywheelSpeed;
+    System.out.println(speed);
+    if (driver.getState() == Xbox.DPAD.UP) {
+      if (speed < 1) {
+        speed += 0.05;
+      }
+    }
+    else if (driver.getState() == Xbox.DPAD.DOWN) {
+      if (speed > 0) {
+        speed -= 0.5;
+      }
+    }
+  }
+
+  @Override
+  public void end(boolean interrupted) {}
+
+  @Override
+  public boolean isFinished() {
+    return false;
+  }
+}
